@@ -1,0 +1,39 @@
+datasource db {
+    provider = "mysql"
+    url      = "mysql://root:@localhost/recrutement"
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+model Job {
+    uuid        String   @id @default(uuid())
+    job_name    String
+    content     String
+    specificity String
+    surveys     Survey[]
+    candidatures     Candidature[]
+}
+
+model Survey {
+    uuid        String @id @default(uuid())
+    job_name    String
+    survey_name String
+    jobId       String @map("job_id")
+    job         Job    @relation(fields: [jobId], references: [uuid])
+}
+
+model Candidature {
+    uuid         String @id @default(uuid())
+    name         String?
+    cv           String? @db.Text
+    mail         String?
+    cover_letter String? @db.Text
+    job_name     String?
+    test_note    String?
+    survey_note  String?
+    status       String?
+    job_id       String @map("job_id")
+    job          Job    @relation(fields: [job_id], references: [uuid])
+}

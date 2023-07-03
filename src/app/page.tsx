@@ -1,95 +1,168 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+/** @format */
 
-export default function Home() {
-  return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+'use client'
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+import { PrismaClient } from '@prisma/client';
+import { useEffect, useState, useCallback } from 'react';
+import fs from 'fs';
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+export default function HomePage() {
+	const [data, setData] = useState();
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
+	//modififer status
+	// const prisma = new PrismaClient();
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
+	// async function updateStatus() {
+	// 	const updatedRows = await prisma.candidature.updateMany({
+	// 		where: {
+	// 			test_note:{
+	// 				not: null
+	// 			}
+	// 		},
+	// 		data: {
+	// 			status: 'deja tester'
+	// 		},
+	// 	});
+	// }
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+	// updateStatus()
+	// .catch(error => {
+	// 	console.error(error);
+	// })
+
+	//
+
+	// ajouter un fichier
+	const [base64Data, setBase64Data] = useState<string>('');
+	const [base64Data2, setBase64Data2] = useState<string>('');
+
+  	const convertToBase64 = useCallback((file: File): Promise<string> => {
+    	return new Promise((resolve, reject) => {
+      		const reader = new FileReader();
+      		reader.onload = (event) => {
+        	if (event.target?.result) {
+          		resolve(event.target.result.toString());
+        	} else {
+          		reject(new Error('Error reading file'));
+        	}
+      	};
+      	reader.onerror = (event) => {
+        	reject(event.target?.error || new Error('Error reading file'));
+      	};
+      	reader.readAsDataURL(file);
+    	});
+  	}, []);
+
+  	const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    	const file = event.target.files;
+		console.log('file: ', file)
+		// if (file && file.length >= 2) {
+		// 	setBase64Data(file[0]);
+		// 	setBase64Data2(file[1]);
+		// }
+
+
+		if(file?.length == 2) {
+			const [cv, coverLetter] =  await Promise.all([convertToBase64(file[0]), convertToBase64(file[1])]);
+			console.log('cv: ', cv);
+			console.log('coverLetter: ', coverLetter)
+		} else if (file) {
+      		convertToBase64(file[0])
+        	.then((data) => {
+				fetchData(data)
+				return setBase64Data(data);
+			})
+        	.catch((error) => console.error(error));
+			
+    	}	
+  	};
+
+// ajouter une candidature
+
+  	const fetchData = async (base64: string) => {
+		const dt = await (
+			await fetch(`http://localhost:3000/api/candidature`, {
+				method: "POST",
+				body: JSON.stringify({
+					name: "avec cv",
+					test_note: "be",
+					cv: base64,
+					cover_letter: base64,
+				})
+			})
+		).json();
+		setData(dt);
+		
+	};
+
+	// useEffect(()=>{
+	// 	fetchData()
+	// }, [])
+
+
+	console.log(base64Data)
+
+	// ajouter un questionnaire
+
+	// const fetchData = async () => {
+	// 	const dt = await (
+	// 		await fetch(`http://localhost:3000/api/survey`, {
+	// 			method: "POST",
+	// 			body: JSON.stringify({
+	// 				job_name: "Bonjour",
+	// 				survey_name: "Test"
+	// 			})
+	// 		})
+	// 	).json();
+	// 	setData(dt);
+
+	// };
+
+	// useEffect(() => {
+	// fetchData()
+	// }, [])
+
+	//ajouter un job
+
+	// const fetchData = async () => {
+	// 	const dt = await (
+	// 		await fetch(`http://localhost:3000/api/job`, {
+	// 			method: "POST",
+	// 			body: JSON.stringify({
+	// 				job_name: "Bonjour",
+	// 				specificit: "Test"
+	// 			})
+	// 		})
+	// 	).json();
+	// 	setData(dt);
+
+	// };
+
+	// useEffect(() => {
+	// 	fetchData()
+	// }, [])
+
+	//lister les candidature
+
+	// const prisma: PrismaClient = new PrismaClient();
+	// let param = 'Igor'
+	// const filteredcandidature = await prisma.candidature.findMany({
+	// 	where:{
+	// 		name:param,
+	// 	}
+	// });
+
+	//lister les job
+
+	// const prisma: PrismaClient = new PrismaClient()
+	// const filteredjob = await prisma.job.findMany()
+
+	
+
+  	return (
+    	<div>
+      		<input type="file" multiple onChange={handleFileChange} />
+      		{base64Data}
+    	</div>
+  	);
 }
