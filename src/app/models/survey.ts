@@ -6,4 +6,9 @@ export interface Survey {
     job_id: string;
     job: Job[]
     uuid: string;
-}
+    question: [
+        'jhjkh ',
+        'hjkh khjk',
+        'hkjhkh'
+    ],
+} 

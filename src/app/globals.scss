@@ -1,0 +1,37 @@
+/** @format */
+
+
+html,
+body {
+	height: 100%;
+	width: 100%;
+	background-color: #f8f9f9;
+}
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+}
+
+.popup{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.popup-content {
+	background-color: rgb(12 90 93/var(--tw-bg-opacity));
+	height: 225px;
+	width: 30%;
+	position: fixed;
+	top: 20%;
+	display: flex;
+	flex-direction: column;
+    align-items: center;
+    justify-content: center;
+	color: white;
+	font-size: 25px;
+	gap: 20px;
+	padding: 20px;
+	border-radius: 10px;
+}
