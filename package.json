@@ -15,18 +15,27 @@
 		"@types/nodemailer": "^6.4.8",
 		"@types/react": "18.2.14",
 		"@types/react-dom": "18.2.6",
+		"bcrypt": "^5.1.0",
+		"bcryptjs": "^2.4.3",
 		"googleapis": "^120.0.0",
+		"moment": "^2.29.4",
 		"mysql": "^2.18.1",
 		"next": "13.4.7",
 		"nodemailer": "^6.9.3",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
+		"react-icons": "^4.10.1",
+		"react-router-dom": "^6.14.2",
+		"react-swipeable-views": "^0.14.0",
 		"sass": "^1.63.6",
+		"swipeable": "^1.0.5",
 		"typescript": "5.1.5",
 		"xoauth2": "^1.2.0"
 	},
 	"devDependencies": {
 		"@prisma/client": "^4.16.1",
+		"@types/bcrypt": "^5.0.0",
+		"html-loader": "^4.2.0",
 		"prisma": "^4.16.1"
 	}
 }

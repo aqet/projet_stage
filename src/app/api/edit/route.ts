@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import db, { executeQuery } from "@/app/api/sql";
 import { PrismaClient } from "@prisma/client";
-import { Candidature as ICandidature } from "@/models/candidature";
+import { Job as IJob} from "@/models/job";
 
 
 // GET prendre/recuperer des donnees
@@ -10,21 +10,19 @@ import { Candidature as ICandidature } from "@/models/candidature";
 // DELETE supprimer
 
 const prisma: PrismaClient = new PrismaClient();
-
 export async function POST(req: Request) {
-    const body: ICandidature = await req.json();
+    const body: IJob = await req.json();
     try {
-        const tag = await prisma.candidature.create({
+        const tag = await prisma.job.update({
+            where:{uuid: body.uuid},
             data: {               
-                name: body.name,
-                mail: body.mail,
-                job_name: body.job_name,
-                test_note: body.test_note,
-                survey_note: body.survey_note,
-                status: body.status,
-                job_id: body.job_id,
-                cv: body.cv,
-                cover_letter: body.cover_letter,
+                content: body.content ?? '',
+                specificity: body.specificity ?? '',
+                job_name: body.job_name ?? '',
+                hour: body.hour ??'',
+                cdi: body.cdi ??'',
+                number_place: body.number_place ??'',
+                qualification: body.qualification ??'',
             },
         })
         return NextResponse.json(tag, { status: 200 })
@@ -38,7 +36,7 @@ export async function POST(req: Request) {
 export async function GET(req: Request) {
     try {
         // let result = await executeQuery('SELECT * FROM candidature')
-        let result = await prisma.candidature.findMany();
+        let result = await prisma.job.findMany();
         return NextResponse.json(result, { status: 200 });
     } catch (error) {
         return NextResponse.json(error, { status: 500 })

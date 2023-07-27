@@ -1,4 +1,4 @@
-import { Job } from "@/app/models/job";
+import { Job } from "@/models/job";
 
 export interface Survey {
     job_name: string;
@@ -6,9 +6,5 @@ export interface Survey {
     job_id: string;
     job: Job[]
     uuid: string;
-    question: [
-        'jhjkh ',
-        'hjkh khjk',
-        'hkjhkh'
-    ],
+    question: []
 } 

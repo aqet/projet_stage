@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 46 46" fill="none">
+    <path opacity="0.5"
+        d="M23.0557 45C35.2059 45 45.0557 35.1503 45.0557 23C45.0557 10.8497 35.2059 1 23.0557 1C10.9054 1 1.05566 10.8497 1.05566 23C1.05566 35.1503 10.9054 45 23.0557 45Z"
+        stroke="#FAF6FD" strokeLinecap="round" strokeLinejoin="round" />
+    <path
+        d="M31.0557 15L23.0557 23L31.0557 15ZM23.0557 23L15.0557 31L23.0557 23ZM23.0557 23L15.0557 15L23.0557 23ZM23.0557 23L31.0557 31L23.0557 23Z"
+        fill="#FAF6FD" />
+    <path d="M31.0557 15L23.0557 23M23.0557 23L15.0557 31M23.0557 23L15.0557 15M23.0557 23L31.0557 31" stroke="#F1F1F1"
+        strokeLinecap="round" strokeLinejoin="round" />
+</svg>

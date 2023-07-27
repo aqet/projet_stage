@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import db, { executeQuery } from "@/app/api/sql";
 import { PrismaClient } from "@prisma/client";
-import { Job as IJob} from "@/app/models/job";
+import { Job as IJob} from "@/models/job";
 
 
 // GET prendre/recuperer des donnees
@@ -19,6 +19,10 @@ export async function POST(req: Request) {
                 content: body.content ?? '',
                 specificity: body.specificity ?? '',
                 job_name: body.job_name ?? '',
+                hour: body.hour ??'',
+                cdi: body.cdi ??'',
+                number_place: body.number_place ??'',
+                qualification: body.qualification ??'',
             },
         })
         return NextResponse.json(tag, { status: 200 })

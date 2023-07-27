@@ -1,0 +1,6 @@
+<svg style={{ cursor: 'progress' }} xmlns="http://www.w3.org/2000/svg" width="18" height="22" viewBox="0 0 18 22"
+    fill="none">
+    <path d="M9 1V19M9 19L2 12M9 19L16 12" stroke="#093649" strokeWidth="1.5" strokeLinecap="round"
+        strokeLinejoin="round" />
+    <line x1="0.5" y1="21.5" x2="17.5" y2="21.5" stroke="#093649" strokeLinecap="round" />
+</svg>

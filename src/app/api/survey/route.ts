@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import db, { executeQuery } from "@/app/api/sql";
 import { PrismaClient } from "@prisma/client";
-import { Survey as ISurvey } from "@/app/models/survey";
+import { Survey as ISurvey } from "@/models/survey";
+import { error } from "console";
 
 
 const prisma: PrismaClient = new PrismaClient();
@@ -9,16 +10,18 @@ const prisma: PrismaClient = new PrismaClient();
 export async function POST(req: Request) {
     const body: ISurvey = await req.json();
     try {
+        console.log('good');
         const tag = await prisma.survey.create({
             data: {
-                job_name: body.job_name,
-                survey_name: body.survey_name,
+                job_name: body.job_name||'',
+                survey_name: body.survey_name||'',
                 jobId: "tttyyy",
             },
         })
         return NextResponse.json(tag, {status: 200})
     
     } catch(err) {
+        console.log('error: '+err);
         return NextResponse.json(err, {status: 500})
     } 
   }

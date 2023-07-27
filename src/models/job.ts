@@ -3,4 +3,8 @@ export interface Job {
     job_name: string
     content: string
     specificity: string
+    hour: string
+    cdi: string
+    number_place: string
+    qualification: string
 }

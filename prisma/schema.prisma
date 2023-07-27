@@ -12,6 +12,10 @@ model Job {
     job_name    String
     content     String
     specificity String
+    hour        String
+    cdi         String
+    number_place String
+    qualification String
     surveys     Survey[]
     candidatures     Candidature[]
 }
@@ -36,4 +40,10 @@ model Candidature {
     status       String?
     job_id       String @map("job_id")
     job          Job    @relation(fields: [job_id], references: [uuid])
+}
+
+model Authentification{
+    uuid String @id @default(uuid())
+    username String
+    password String
 }
